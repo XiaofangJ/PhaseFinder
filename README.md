@@ -9,7 +9,7 @@ PhaseFinder is a pipeline to identify and quantify DNA inversion in bacterial ge
 
 ## Data preparation
 
-![inverted repeats](https://github.mit.edu/xiaofang/PhaseFinder/blob/master/IR.png)
+![inverted repeats](https://github.com/XiaofangJ/PhaseFinder/blob/master/IR.png)
 Identify regions flanked by inverted repeats with tools such as [einverted](http://emboss.sourceforge.net/apps/release/6.6/emboss/apps/einverted.html) and [palindrome](http://emboss.sourceforge.net/apps/cvs/emboss/apps/palindrome.html).
 
 
