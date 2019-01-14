@@ -162,4 +162,4 @@ sed '1d' output_from_phasefinder.ratio.txt| awk '{print $1"\t"$0}'|sed 's/:/\t/;
 ```
 
 ## Citation
-
+Jiang X, Hall AB, et al. Invertible promoters mediate bacterial phase variation, antibiotic resistance, and host adaptation in the gut, *Science* (2019) [DOI: 10.1126/science.aau5238](http://science.sciencemag.org/content/363/6423/181)
