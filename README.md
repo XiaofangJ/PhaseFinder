@@ -12,11 +12,12 @@ The PhaseFinder algorithm is designed to detect DNA inversion mediated phase var
 + [bedops](https://bedops.readthedocs.io/en/latest/)
 + [bedtools](https://bedtools.readthedocs.io/en/latest/)
 
-On Ubuntu 18.04 the required software can be installed with the following commands.
+To install PhaseFinder
 ```
-sudo apt-get install bowtie samtools bedtools emboss python-pip python-pandas
-sudo pip install biopython 
-wget https://github.com/bedops/bedops/releases/download/v2.4.35/bedops_linux_x86_64-v2.4.35.tar.bz2 && tar jxf bedops_linux_x86_64-v2.4.35.tar.bz2 && sudo cp bin/* /usr/local/bin/
+git clone git@github.com:nlm-irp-jianglab/PhaseFinder.git
+cd PhaseFinder
+conda env create --file environment.yml
+conda activate PhaseFinder
 ```
 
 ## Quick Start
@@ -48,20 +49,24 @@ Users can identify inverted repeats using the "PhaseFinder.py locate" command, o
 
 #### 1.1. Generate the position table with the PhaseFinder script
 ```
-usage: PhaseFinder.py locate [-h] -f  -t  [-e] [-m] [-r] [-g ] [-p]
+Usage: PhaseFinder.py locate [OPTIONS]
 
-optional arguments:
-  -h, --help         show this help message and exit
-  -f , --fasta       input genome sequence file in fasta format
-  -t , --tab         output table with inverted repeats coordinates
-  -e , --einv        einverted parameters, if unspecified run with PhaseFinder
-                     default pipeline
-  -m , --mismatch    max number of mismatches allowed between IR pairs,used
-                     with -einv (default:3)
-  -r , --IRsize      max size of the inverted repeats, used with -einv
-                     (default:50)
-  -g  , --gcRatio    the minimum and maximum value of GC ratio
-  -p, --polymer      Remove homopolymer inverted repeats
+  Locate putative inverted regions
+
+Options:
+  -f, --fasta PATH        Input genome sequence file in fasta format
+                          [required]
+  -t, --tab PATH          Output table with inverted repeats coordinates
+                          [required]
+  -e, --einv TEXT         Einverted parameters, if unspecified run with
+                          PhaseFinder default pipeline
+  -m, --mismatch INTEGER  Max number of mismatches allowed between IR pairs,
+                          used with -einv (default:3)
+  -r, --IRsize INTEGER    Max size of the inverted repeats, used with -einv
+                          (default:50)
+  -g, --gcRatio MIN MAX   The minimum and maximum value of GC ratio
+  -p, --polymer           Remove homopolymer inverted repeats
+  --help                  Show this message and exit.
 ```
 
 ##### Input: A fasta file containing the genome sequence
@@ -102,15 +107,18 @@ A table file with five columns (tab delimited):
 ---
 ### 2. Mimic inversion in silico to create a database of inverted sequences
 ```
-usage: PhaseFinder.py create [-h] -f  -t  -s  -i
+Usage: PhaseFinder.py create [OPTIONS]
 
-optional arguments:
-  -h, --help         show this help message and exit
-  -f , --fasta       input genome sequence file in fasta format
-  -t , --tab         table with inverted repeat coordinates
-  -s , --flanksize   base pairs of flanking DNA on both sides of the
-                     identified inverted repeats
-  -i , --inv         output path of the inverted fasta file
+  Create inverted fasta file
+
+Options:
+  -f, --fasta PATH         Input genome sequence file in fasta format
+                           [required]
+  -t, --tab PATH           Table with inverted repeat coordinates  [required]
+  -s, --flanksize INTEGER  Base pairs of flanking DNA on both sides of the
+                           identified inverted repeats  [required]
+  -i, --inv PATH           Output path of the inverted fasta file  [required]
+  --help                   Show this message and exit.
 ```
 
 #### Input
@@ -123,15 +131,17 @@ optional arguments:
 ---
 ### 3. Align sequence reads to inverted sequence database and calculate the ratio of reads aligning to the F or R orienation. 
 ```
-usage: PhaseFinder.py ratio [-h] -i  -1  -2  [-p] -o
+Usage: PhaseFinder.py ratio [OPTIONS]
 
-optional arguments:
-  -h, --help       show this help message and exit
-  -i , --inv       input path of the inverted fasta file
-  -1 , --fastq1    first pair in fastq
-  -2 , --fastq2    second pair in fastq
-  -p , --threads   number of threads
-  -o , --output    output prefix
+  Align reads to inverted fasta file
+
+Options:
+  -i, --inv PATH         Input path of the inverted fasta file  [required]
+  -1, --fastq1 PATH      First pair in fastq  [required]
+  -2, --fastq2 PATH      Second pair in fastq  [required]
+  -p, --threads INTEGER  Number of threads
+  -o, --output TEXT      Output prefix  [required]
+  --help                 Show this message and exit.
 ```
 
 #### Input
